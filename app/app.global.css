@@ -1,0 +1,127 @@
+/*
+ * @NOTE: Prepend a `~` to css file paths that are in your node_modules
+ *        See https://github.com/webpack-contrib/sass-loader#imports
+ */
+@import '~@fortawesome/fontawesome-free/css/all.css';
+@import '~bootstrap/dist/css/bootstrap.css';
+
+@font-face {
+  font-family: CaviarDreams;
+  src: url('../resources/fonts/caviar-dreams/CaviarDreams.ttf');
+}
+
+@font-face {
+  font-family: CaviarDreams_Bold;
+  src: url('../resources/fonts/caviar-dreams/CaviarDreams_Bold.ttf');
+}
+
+@font-face {
+  font-family: CaviarDreams_Bold_Italic;
+  src: url('../resources/fonts/caviar-dreams/CaviarDreams_BoldItalic.ttf');
+}
+
+@font-face {
+  font-family: CaviarDreams_Italic;
+  src: url('../resources/fonts/caviar-dreams/CaviarDreams_Italic.ttf');
+}
+body,
+#root {
+  height: 100vh;
+}
+
+body {
+  position: relative;
+  color: white;
+
+  /* background-color: #74c830;
+  background-image: linear-gradient(
+    45deg,
+    rgba(0, 255, 127, 0.5) 10%,
+    rgba(255, 255, 255, 0.7)
+  ); */
+  background-color: #fff;
+  font-family: CaviarDreams, Verdana, Arial, Helvetica, Helvetica Neue, serif;
+  overflow-y: scroll;
+}
+
+#root{
+  background: url("/resources/icons/png/1024x1024.png") no-repeat center center fixed;
+}
+
+.bg-success {
+  background-color: #74c830 !important;
+}
+
+.text-success {
+  color: #74c830 !important;
+}
+
+h2 {
+  /* margin: 0;
+  font-size: 2.25rem;
+  font-weight: bold;
+  letter-spacing: -0.025em;
+  color: #fff; */
+}
+
+p {
+  /* font-size: 24px; */
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  /* color: white;
+  opacity: 0.75; */
+  text-decoration: none;
+}
+
+a:hover {
+  opacity: 1;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/**
+* security login and register form
+ */
+.form-label-group {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.form-label-group input:not(:placeholder-shown) {
+  padding-top: 1.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.form-label-group input:not(:placeholder-shown) ~ label {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  font-size: 12px;
+  color: #777;
+}
+
+.form-label-group > input,
+.form-label-group > label {
+  height: 3.125rem;
+  padding: 0.75rem;
+}
+
+.form-label-group > label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  line-height: 1.5;
+  color: #495057;
+  pointer-events: none;
+  cursor: text;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  transition: all 0.1s ease-in-out;
+}
