@@ -1,7 +1,7 @@
 {
   "name": "greenponik-desktop-app",
   "productName": "GreenPonikDesktop",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "GreenPonik Desktop App",
   "scripts": {
     "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
@@ -83,6 +83,9 @@
     "win": {
       "target": [
         "nsis",
+        "portable",
+        "zip",
+        "tar.gz",
         "msi"
       ],
       "icon": "resources/icons/win/icon.ico"
@@ -242,17 +245,19 @@
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.10",
     "webpack-merge": "^4.1.4",
-    "yarn": "^1.12.3"
+    "yarn": "^1.17.3"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.5.0",
     "bootstrap": "^4.3.1",
+    "core-js": "3",
     "devtron": "^1.4.0",
     "electron-debug": "^2.0.0",
     "electron-log": "^2.2.17",
     "electron-updater": "^3.2.3",
     "history": "^4.7.2",
     "jquery": "^3.4.1",
+    "lodash": "4.17.13",
     "popper.js": "^1.15.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
