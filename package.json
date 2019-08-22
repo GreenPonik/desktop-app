@@ -82,7 +82,6 @@
     "win": {
       "target": [
         "nsis",
-        "portable",
         "msi"
       ],
       "icon": "resources/icons/win/icon.ico"
