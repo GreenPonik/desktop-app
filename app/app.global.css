@@ -45,7 +45,7 @@ body {
 }
 
 #root{
-  background: url("/resources/icons/png/1024x1024.png") no-repeat center center fixed;
+  background: url("../resources/icons/png/1024x1024.png") no-repeat center center fixed;
 }
 
 .bg-success {

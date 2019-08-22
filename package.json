@@ -90,8 +90,8 @@
       "icon": "resources/icons/win/icon.ico"
     },
     "nsis": {
-      "installerIcon": "icon.ico",
-      "installerHeaderIcon": "icon.ico",
+      "installerIcon": "resources/icons/win/icon.ico",
+      "installerHeaderIcon": "resources/icons/win/icon.ico",
       "deleteAppDataOnUninstall": true
     },
     "linux": {
@@ -116,7 +116,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/greenponik/smartapp/desktop-app.git"
+    "url": "https://github.com/GreenPonik/desktop-app"
   },
   "author": {
     "name": "GreenPonik SAS",
@@ -125,7 +125,7 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://gitlab.com/greenponik/smartapp/desktop-app/issues"
+    "url": "https://github.com/GreenPonik/desktop-app/issues"
   },
   "keywords": [
     "greeponik",
@@ -205,7 +205,7 @@
     "eslint-plugin-flowtype": "^3.2.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jest": "^22.0.0",
-    "eslint-plugin-jsx-a11y": "6.1.2",
+    "eslint-plugin-jsx-a11y": "6.2.3",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-react": "^7.11.1",
     "eslint-plugin-testcafe": "^0.2.1",
@@ -249,11 +249,11 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.5.0",
     "bootstrap": "^4.3.1",
-    "core-js": "3",
+    "core-js": "2",
     "devtron": "^1.4.0",
     "electron-debug": "^2.0.0",
     "electron-log": "^2.2.17",
-    "electron-updater": "^3.2.3",
+    "electron-updater": "4.0.0",
     "history": "^4.7.2",
     "jquery": "^3.4.1",
     "lodash": "4.17.13",
