@@ -244,7 +244,7 @@
     "yarn": "^1.17.3"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.5.0",
+    "@fortawesome/fontawesome-free": "^5.10.0",
     "bootstrap": "^4.3.1",
     "core-js": "2",
     "devtron": "^1.4.0",
