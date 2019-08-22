@@ -1,0 +1,197 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Ec component should match exact snapshot 1`] = `
+<div>
+  <ul
+    className="list-unstyled"
+  >
+    <li
+      className="list-item alert alert-dark"
+    >
+      <ul
+        className="list-inline"
+      >
+        <li
+          className="list-inline-item text-danger"
+          title="Regulation status"
+        >
+          <span
+            className=""
+            onClick={[Function]}
+          >
+            <i
+              className="fas fa-poll fa-2x"
+            />
+             
+            Stopped
+          </span>
+        </li>
+        <li
+          className="list-inline-item text-danger"
+          title="Calibration status"
+        >
+          <span
+            className=""
+            onClick={[Function]}
+          >
+            <i
+              className="fas fa-syringe fa-2x"
+            />
+             
+            Stopped
+          </span>
+        </li>
+      </ul>
+    </li>
+    <li
+      className="list-item alert alert-success"
+    >
+      <i
+        className="fas fa-ruler-horizontal fa-rotate-90 fa-2x"
+      />
+      <span
+        className="h2"
+      >
+        Ec 
+      </span>
+       
+      <span
+        className="h2"
+      >
+        NaN
+      </span>
+    </li>
+    <li>
+      <form
+        className="form"
+      >
+        <li
+          className="list-item alert alert-info"
+        >
+          <label
+            className="text-center"
+          >
+            SetPoint
+          </label>
+          <div
+            className="input-group"
+          >
+            <div
+              className="input-group-prepend row no-gutters"
+            >
+              <label
+                className="input-group-text text-secondary text-center px-3 px-md-1 col-12 col-md-2"
+              >
+                <i
+                  className="fas fa-bullseye"
+                />
+                 
+                NaN
+              </label>
+              <input
+                className="custom-range mt-2 px-1 text-center col-12 col-md-6 mx-auto"
+                id="_setPoint"
+                max="4.0"
+                min="0.0"
+                name="_setPoint"
+                onChange={[Function]}
+                step="0.1"
+                type="range"
+              />
+              <div
+                className="col-12 col-md-4 text-center"
+              >
+                <button
+                  className="btn btn-info"
+                  onClick={[Function]}
+                  type="button"
+                >
+                  <i
+                    className="fas fa-minus"
+                  />
+                </button>
+                 
+                <button
+                  className="btn btn-info"
+                  onClick={[Function]}
+                  type="button"
+                >
+                  <i
+                    className="fas fa-plus"
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li
+          className="list-item alert alert-warning"
+        >
+          <label
+            className="text-center"
+          >
+            Max pumps duration
+          </label>
+          <div
+            className="input-group"
+          >
+            <div
+              className="input-group-prepend row no-gutters"
+            >
+              <label
+                className="input-group-text text-secondary text-center px-3 px-md-0 col-12 col-md-2"
+              >
+                <i
+                  className="fas fa-bullseye"
+                />
+                 
+                NaN
+              </label>
+              <input
+                className="custom-range mt-2 px-1 text-center col-12 col-md-6 mx-auto"
+                id="_maxDuration"
+                max="60000"
+                min="0"
+                name="_maxDuration"
+                onChange={[Function]}
+                step="100"
+                type="range"
+              />
+              <div
+                className="col-12 col-md-4 text-center"
+              >
+                <button
+                  className="btn btn-warning text-white"
+                  onClick={[Function]}
+                  type="button"
+                >
+                  <i
+                    className="fas fa-minus"
+                  />
+                </button>
+                 
+                <button
+                  className="btn btn-warning text-white"
+                  onClick={[Function]}
+                  type="button"
+                >
+                  <i
+                    className="fas fa-plus"
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
+        </li>
+        <button
+          className="btn btn-info form-control mt-3"
+          onClick={[Function]}
+          type="submit"
+        >
+          Send it to hub
+        </button>
+      </form>
+    </li>
+  </ul>
+</div>
+`;

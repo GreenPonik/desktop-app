@@ -19,6 +19,19 @@ class Settings extends Component {
     }
   }
 
+  componentDidMount(){
+    if (localStorage.getItem('ipAddress')) {
+      this.setState({
+        ipAddress: localStorage.getItem('ipAddress')
+      });
+    }
+    if (localStorage.getItem('setupName')) {
+      this.setState({
+        setupName: JSON.parse(localStorage.getItem('setupName')),
+      });
+    }
+  }
+
   handleSetupNameChange(e) {
     e.preventDefault();
     this.setState({ setupName: e.target.value });

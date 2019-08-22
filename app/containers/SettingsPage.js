@@ -6,7 +6,7 @@ import Settings from '../components/Settings';
 class SettingsPage extends Component {
   render() {
     return (
-      <div className="container-fluid p-0 min-h-100 h-100">
+      <div className="container-fluid p-0 mh-100 h-100">
         <div className="row no-gutters justify-content-center bg-danger text-white h-100">
           <div className="col d-flex align-items-center">
             <div className="mx-auto">

@@ -8,16 +8,18 @@ class Hub extends Component {
       data: {},
       sensors: {}
     };
-    // if (localStorage.getItem('data')) {
-    //   this.state.data = JSON.parse(localStorage.getItem('data'));
-    //   this.state.sensors = this.state.data.hub.sensors;
-    // }
-  }
-
-  componentWillMount(){
     if (localStorage.getItem('data')) {
       this.state.data = JSON.parse(localStorage.getItem('data'));
       this.state.sensors = this.state.data.hub.sensors;
+    }
+  }
+
+  componentWillMount() {
+    if (localStorage.getItem('data')) {
+      this.setState({
+        data: JSON.parse(localStorage.getItem('data')),
+        sensors: this.state.data.hub.sensors
+      });
     }
   }
 

@@ -5,21 +5,37 @@ class Ec extends Component {
     super(props);
     this.state = {
       data: {},
+      ec: {},
       ipAddress: null
     };
-    if (localStorage.getItem("ipAddress")) {
-      this.state.ipAddress = localStorage.getItem("ipAddress");
+    if (localStorage.getItem('ipAddress')) {
+      this.state.ipAddress = localStorage.getItem('ipAddress');
     }
-    if (localStorage.getItem("data")) {
-      this.state.data = JSON.parse(localStorage.getItem("data"));
+    if (localStorage.getItem('data')) {
+      this.state.data = JSON.parse(localStorage.getItem('data'));
+      this.state.ec = this.state.data.slaves_modules.water_sensor.ec;
+    }
+  }
+
+  componentDidMount(){
+    if (localStorage.getItem('ipAddress')) {
+      this.setState({
+        ipAddress: localStorage.getItem('ipAddress')
+      });
+    }
+    if (localStorage.getItem('data')) {
+      this.setState({
+        data: JSON.parse(localStorage.getItem('data')),
+        ec: this.state.data.slaves_modules.water_sensor.ec
+      });
     }
   }
 
   handleToggleReg(e) {
     e.preventDefault();
-    let water_sensor = Object.assign({}, this.state.data.slaves_modules.water_sensor);
-    water_sensor.ec.regulation_state = !e.target.value;
-    this.setState({ water_sensor });
+    let ec = Object.assign({}, this.state.ec);
+    ec.regulation_state = !e.target.value;
+    this.setState({ ec });
     alert(
       'regulation state will send : ' + JSON.stringify(water_sensor, null, 2)
     );
@@ -27,10 +43,10 @@ class Ec extends Component {
 
   handleToggleCal(e) {
     e.preventDefault();
-    let water_sensor = Object.assign({}, this.state.data.slaves_modules.water_sensor);
+    let ec = Object.assign({}, this.state.ec);
     console.log('uncomment line above to permit calibration launch');
-    // water_sensor.ec.calib_launch = !e.target.value;
-    this.setState({ water_sensor });
+    // ec.calib_launch = !e.target.value;
+    this.setState({ ec });
     alert(
       'calibration state will send : ' + JSON.stringify(water_sensor, null, 2)
     );
@@ -44,9 +60,9 @@ class Ec extends Component {
       e.preventDefault();
       sp = e.target.value;
     }
-    let water_sensor = Object.assign({}, this.state.data.slaves_modules.water_sensor);
-    water_sensor.ec.set_point = sp;
-    this.setState({ water_sensor });
+    let ec = Object.assign({}, this.state.ec);
+    ec.set_point = sp;
+    this.setState({ ec });
   }
 
   handleChangePumpsDuration(e) {
@@ -57,9 +73,9 @@ class Ec extends Component {
       e.preventDefault();
       d = e.target.value;
     }
-    let water_sensor = Object.assign({}, this.state.data.slaves_modules.water_sensor);
-    water_sensor.ec.max_pumps_durations = d;
-    this.setState({ water_sensor });
+    let ec = Object.assign({}, this.state.ec);
+    ec.max_pumps_durations = d;
+    this.setState({ ec });
   }
 
   handleSubmit(e) {
@@ -89,10 +105,10 @@ class Ec extends Component {
         }
     }
     */
-    let water_sensor = Object.assign({}, this.state.data.slaves_modules.water_sensor);
-    water_sensor.ec.set_point = this.state.data.slaves_modules.water_sensor.ec.set_point;
-    water_sensor.ec.max_pumps_durations = this.state.data.slaves_modules.water_sensor.ec.max_pumps_durations;
-    this.setState({ water_sensor });
+    let ec = Object.assign({}, this.state.ec);
+    ec.set_point = this.state.ec.set_point;
+    ec.max_pumps_durations = this.state.ec.max_pumps_durations;
+    this.setState({ ec });
     console.log('data will send : ' + JSON.stringify({ water_sensor }));
     const url = 'http://' + this.state.ipAddress + '/set-water-sensor';
     console.info('info : sending to : ' + url);
@@ -105,14 +121,16 @@ class Ec extends Component {
   }
 
   render() {
-    const { data } = this.state;
+    const { ec } = this.state;
     return (
       <ul className="list-unstyled">
         <li className="list-item alert alert-dark">
           <ul className="list-inline">
             <li
               className={
-                data.slaves_modules.water_sensor.ec.regulation_state === 1
+                ec === null
+                  ? 'list-inline-item text-secondary'
+                  : ec.regulation_state === 1
                   ? 'list-inline-item text-success'
                   : 'list-inline-item text-danger'
               }
@@ -120,12 +138,18 @@ class Ec extends Component {
             >
               <span className="" onClick={event => this.handleToggleReg(event)}>
                 <i className="fas fa-poll fa-2x" />{' '}
-                {data.slaves_modules.water_sensor.ec.regulation_state === 1 ? 'Runnig' : 'Stopped'}
+                {ec === null
+                  ? 'Error'
+                  : ec.regulation_state === 1
+                  ? 'Runnig'
+                  : 'Stopped'}
               </span>
             </li>
             <li
               className={
-                data.slaves_modules.water_sensor.ec.calib_launch === 1
+                ec === null
+                  ? 'list-inline-item text-secondary'
+                  : ec.calib_launch === 1
                   ? 'list-inline-item text-success'
                   : 'list-inline-item text-danger'
               }
@@ -133,7 +157,11 @@ class Ec extends Component {
             >
               <span className="" onClick={event => this.handleToggleCal(event)}>
                 <i className="fas fa-syringe fa-2x" />{' '}
-                {data.slaves_modules.water_sensor.ec.calib_launch === 1 ? 'Running' : 'Stopped'}
+                {ec === null
+                  ? 'Error'
+                  : ec.calib_launch === 1
+                  ? 'Running'
+                  : 'Stopped'}
               </span>
             </li>
           </ul>
@@ -141,7 +169,9 @@ class Ec extends Component {
         <li className="list-item alert alert-success">
           <i className="fas fa-ruler-horizontal fa-rotate-90 fa-2x" />
           <span className="h2">Ec </span>{' '}
-          <span className="h2">{Number(data.slaves_modules.water_sensor.ec.value).toFixed(2)}</span>
+          <span className="h2">
+            {ec === null ? 0 : Number(ec.value).toFixed(2)}
+          </span>
         </li>
         <li>
           <form className="form">
@@ -149,22 +179,22 @@ class Ec extends Component {
               <label className="text-center">SetPoint</label>
               <div className="input-group">
                 <div className="input-group-prepend row no-gutters">
-                  <label className="input-group-text text-secondary text-center px-3 px-md-1 col-12 col-md-2">
+                  <label className="input-group-text text-secondary text-center px-3 px-md-1 col-12 col-md-4">
                     <i className="fas fa-bullseye" />{' '}
-                    {Number(data.slaves_modules.water_sensor.ec.set_point).toFixed(2)}
+                    {ec === null ? 0 : Number(ec.set_point).toFixed(2)}
                   </label>
                   <input
-                    className="custom-range mt-2 px-1 text-center col-12 col-md-6 mx-auto"
+                    className="custom-range mt-2 px-1 text-center col-12 col-md-8 mx-auto"
                     type="range"
                     min="0.0"
                     max="4.0"
                     step="0.1"
                     name="_setPoint"
                     id="_setPoint"
-                    value={data.slaves_modules.water_sensor.ec.set_point}
+                    value={ec === null ? 0 : ec.set_point}
                     onChange={event => this.handleChange(event)}
                   />
-                  <div className="col-12 col-md-4 text-center">
+                  <div className="col-12 text-center">
                     <button
                       type="button"
                       className="btn btn-info"
@@ -193,22 +223,24 @@ class Ec extends Component {
               <label className="text-center">Max pumps duration</label>
               <div className="input-group">
                 <div className="input-group-prepend row no-gutters">
-                  <label className="input-group-text text-secondary text-center px-3 px-md-0 col-12 col-md-2">
+                  <label className="input-group-text text-secondary text-center px-3 px-md-0 col-12 col-md-4">
                     <i className="fas fa-bullseye" />{' '}
-                    {Number(data.slaves_modules.water_sensor.ec.max_pumps_durations).toFixed(0)}
+                    {ec === null
+                      ? 0
+                      : Number(ec.max_pumps_durations).toFixed(0)}
                   </label>
                   <input
-                    className="custom-range mt-2 px-1 text-center col-12 col-md-6 mx-auto"
+                    className="custom-range mt-2 px-1 text-center col-12 col-md-8 mx-auto"
                     type="range"
                     min="0"
                     max="60000"
                     step="100"
                     name="_maxDuration"
                     id="_maxDuration"
-                    value={data.slaves_modules.water_sensor.ec.max_pumps_durations}
+                    value={ec === null ? 0 : ec.max_pumps_durations}
                     onChange={event => this.handleChangePumpsDuration(event)}
                   />
-                  <div className="col-12 col-md-4 text-center">
+                  <div className="col-12 text-center">
                     <button
                       type="button"
                       className="btn btn-warning text-white"

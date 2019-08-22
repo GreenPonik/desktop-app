@@ -5,6 +5,7 @@ class Ph extends Component {
     super(props);
     this.state = {
       data: {},
+      ph: {},
       ipAddress: null
     };
     if (localStorage.getItem('ipAddress')) {
@@ -12,34 +13,39 @@ class Ph extends Component {
     }
     if (localStorage.getItem('data')) {
       this.state.data = JSON.parse(localStorage.getItem('data'));
+      this.state.ph = this.state.data.slaves_modules.water_sensor.ph;
+    }
+  }
+
+  componentDidMount() {
+    if (localStorage.getItem('ipAddress')) {
+      this.setState({
+        ipAddress: localStorage.getItem('ipAddress')
+      });
+    }
+    if (localStorage.getItem('data')) {
+      this.setState({
+        data: JSON.parse(localStorage.getItem('data')),
+        ph: this.state.data.slaves_modules.water_sensor.ph
+      });
     }
   }
 
   handleToggleReg(e) {
     e.preventDefault();
-    let water_sensor = Object.assign(
-      {},
-      this.state.data.slaves_modules.water_sensor
-    );
-    water_sensor.ph.regulation_state = !e.target.value;
-    this.setState({ water_sensor });
-    alert(
-      'regulation state will send : ' + JSON.stringify(water_sensor, null, 2)
-    );
+    let ph = Object.assign({}, this.state.ph);
+    ph.regulation_state = !e.target.value;
+    this.setState({ ph });
+    alert('regulation state will send : ' + JSON.stringify(ph, null, 2));
   }
 
   handleToggleCal(e) {
     e.preventDefault();
-    let water_sensor = Object.assign(
-      {},
-      this.state.data.slaves_modules.water_sensor
-    );
+    let ph = Object.assign({}, this.state.ph);
     console.log('uncomment line above to permit calibration launch');
-    // water_sensor.ph.calib_launch = !e.target.value;
-    this.setState({ water_sensor });
-    alert(
-      'calibration state will send : ' + JSON.stringify(water_sensor, null, 2)
-    );
+    // ph.calib_launch = !e.target.value;
+    this.setState({ ph });
+    alert('calibration state will send : ' + JSON.stringify(ph, null, 2));
   }
 
   handleChange(e) {
@@ -50,12 +56,9 @@ class Ph extends Component {
       e.preventDefault();
       sp = e.target.value;
     }
-    let water_sensor = Object.assign(
-      {},
-      this.state.data.slaves_modules.water_sensor
-    );
-    water_sensor.ph.set_point = sp;
-    this.setState({ water_sensor });
+    let ph = Object.assign({}, this.state.ph);
+    ph.set_point = sp;
+    this.setState({ ph });
   }
 
   handleChangePumpsDuration(e) {
@@ -66,12 +69,9 @@ class Ph extends Component {
       e.preventDefault();
       d = e.target.value;
     }
-    let water_sensor = Object.assign(
-      {},
-      this.state.data.slaves_modules.water_sensor
-    );
-    water_sensor.ph.max_pumps_durations = d;
-    this.setState({ water_sensor });
+    let ph = Object.assign({}, this.state.ph);
+    ph.max_pumps_durations = d;
+    this.setState({ ph });
   }
 
   handleSubmit(e) {
@@ -101,33 +101,32 @@ class Ph extends Component {
         }
     }
     */
-    let water_sensor = Object.assign(
-      {},
-      this.state.data.slaves_modules.water_sensor
-    );
-    water_sensor.ph.set_point = this.state.data.slaves_modules.water_sensor.ph.set_point;
-    water_sensor.ph.max_pumps_durations = this.state.data.slaves_modules.water_sensor.ph.max_pumps_durations;
-    this.setState({ water_sensor });
-    console.log('data will send : ' + JSON.stringify({ water_sensor }));
+    let ph = Object.assign({}, this.state.ph);
+    ph.set_point = this.state.ph.set_point;
+    ph.max_pumps_durations = this.state.ph.max_pumps_durations;
+    this.setState({ ph });
+    console.log('data will send : ' + JSON.stringify({ ph }));
     const url = 'http://' + this.state.ipAddress + '/set-water-sensor';
     console.info('info : sending to : ' + url);
     fetch(url, {
       method: 'POST',
-      body: JSON.stringify({ water_sensor })
+      body: JSON.stringify({ ph })
     }).then(response => {
       console.log(response.status);
     });
   }
 
   render() {
-    const { data } = this.state;
+    const { ph } = this.state;
     return (
       <ul className="list-unstyled">
         <li className="list-item alert alert-dark">
           <ul className="list-inline">
             <li
               className={
-                data.slaves_modules.water_sensor.ph.regulation_state === 1
+                ph === null
+                  ? 'list-inline-item text-secondary'
+                  : ph.regulation_state === 1
                   ? 'list-inline-item text-success'
                   : 'list-inline-item text-danger'
               }
@@ -135,14 +134,18 @@ class Ph extends Component {
             >
               <span className="" onClick={event => this.handleToggleReg(event)}>
                 <i className="fas fa-poll fa-2x" />{' '}
-                {data.slaves_modules.water_sensor.ph.regulation_state === 1
+                {ph === null
+                  ? 'Error'
+                  : ph.regulation_state === 1
                   ? 'Runnig'
                   : 'Stopped'}
               </span>
             </li>
             <li
               className={
-                data.slaves_modules.water_sensor.ph.calib_launch === 1
+                ph === null
+                  ? 'list-inline-item text-secondary'
+                  : ph.calib_launch === 1
                   ? 'list-inline-item text-success'
                   : 'list-inline-item text-danger'
               }
@@ -150,7 +153,9 @@ class Ph extends Component {
             >
               <span className="" onClick={event => this.handleToggleCal(event)}>
                 <i className="fas fa-syringe fa-2x" />{' '}
-                {data.slaves_modules.water_sensor.ph.calib_launch === 1
+                {ph === null
+                  ? 'Error'
+                  : ph.calib_launch === 1
                   ? 'Running'
                   : 'Stopped'}
               </span>
@@ -161,7 +166,7 @@ class Ph extends Component {
           <span className="h2">pH </span>{' '}
           <i className="fas fa-ruler-horizontal fa-rotate-90 fa-2x" />{' '}
           <span className="h2">
-            {Number(data.slaves_modules.water_sensor.ph.value).toFixed(2)}
+            {ph === null ? 0 : Number(ph.value).toFixed(2)}
           </span>
         </li>
         <li>
@@ -170,24 +175,22 @@ class Ph extends Component {
               <label className="text-center">SetPoint</label>
               <div className="input-group">
                 <div className="input-group-prepend row no-gutters">
-                  <label className="input-group-text text-secondary text-center px-3 px-md-1 col-12 col-md-2">
+                  <label className="input-group-text text-secondary text-center px-3 px-md-1 col-12 col-md-4">
                     <i className="fas fa-bullseye" />{' '}
-                    {Number(
-                      data.slaves_modules.water_sensor.ph.set_point
-                    ).toFixed(2)}
+                    {ph === null ? 0 : Number(ph.set_point).toFixed(2)}
                   </label>
                   <input
-                    className="custom-range mt-2 px-1 text-center col-12 col-md-6 mx-auto"
+                    className="custom-range mt-2 px-1 text-center col-12 col-md-8 mx-auto"
                     type="range"
                     min="0.0"
                     max="14.0"
                     step="0.1"
                     name="_setPoint"
                     id="_setPoint"
-                    value={data.slaves_modules.water_sensor.ph.set_point}
+                    value={ph === null ? 0 : ph.set_point}
                     onChange={event => this.handleChange(event)}
                   />
-                  <div className="col-12 col-md-4 text-center">
+                  <div className="col-12 text-center">
                     <button
                       type="button"
                       className="btn btn-info"
@@ -216,26 +219,24 @@ class Ph extends Component {
               <label className="text-center">Max pumps duration</label>
               <div className="input-group">
                 <div className="input-group-prepend row no-gutters">
-                  <label className="input-group-text text-secondary text-center px-3 px-md-0 col-12 col-md-2">
+                  <label className="input-group-text text-secondary text-center px-3 px-md-0 col-12 col-md-4">
                     <i className="fas fa-bullseye" />{' '}
-                    {Number(
-                      data.slaves_modules.water_sensor.ph.max_pumps_durations
-                    ).toFixed(0)}
+                    {ph === null
+                      ? 0
+                      : Number(ph.max_pumps_durations).toFixed(0)}
                   </label>
                   <input
-                    className="custom-range mt-2 px-1 text-center col-12 col-md-6 mx-auto"
+                    className="custom-range mt-2 px-1 text-center col-12 col-md-8 mx-auto"
                     type="range"
                     min="0"
                     max="60000"
                     step="100"
                     name="_maxDuration"
                     id="_maxDuration"
-                    value={
-                      data.slaves_modules.water_sensor.ph.max_pumps_durations
-                    }
+                    value={ph === null ? 0 : ph.max_pumps_durations}
                     onChange={event => this.handleChangePumpsDuration(event)}
                   />
-                  <div className="col-12 col-md-4 text-center">
+                  <div className="col-12 text-center">
                     <button
                       type="button"
                       className="btn btn-warning text-white"
