@@ -83,8 +83,6 @@
       "target": [
         "nsis",
         "portable",
-        "zip",
-        "tar.gz",
         "msi"
       ],
       "icon": "resources/icons/win/icon.ico"

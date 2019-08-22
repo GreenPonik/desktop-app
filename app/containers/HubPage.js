@@ -7,7 +7,7 @@ import Hub from '../components/Hub';
 class HubPage extends Component {
   render() {
     return (
-      <div className="container-fluid p-0 min-h-100 h-100">
+      <div id="hub-page" className="container-fluid p-0 min-h-100 h-100">
         <div className="row no-gutters justify-content-center bg-primary text-white h-100">
           <div className="col d-flex align-items-center">
             <div className="mx-auto">
