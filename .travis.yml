@@ -50,6 +50,10 @@ cache:
 
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export CXX="g++-8"; fi
+  # https://travis-ci.community/t/yarn-failed-on-windows-os-environment/591
+  - yarn config delete proxy
+  - npm config rm proxy
+  - npm config rm https-proxy
 
 install:
   - yarn --ignore-engines
