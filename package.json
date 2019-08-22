@@ -58,7 +58,7 @@
   "main": "./app/main.prod.js",
   "build": {
     "productName": "GreenPonikDesktop",
-    "appId": "com.greenponik.com.greenponik_desktop",
+    "appId": "com.greenponik.com.greenponik-desktop-app",
     "files": [
       "app/dist/",
       "app/app.html",
