@@ -1,7 +1,7 @@
 {
   "name": "greenponik-desktop-app",
   "productName": "GreenPonikDesktop",
-  "version": "0.0.2",
+  "version": "0.0.2.1",
   "description": "GreenPonik Desktop App",
   "scripts": {
     "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
