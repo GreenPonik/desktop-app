@@ -15,7 +15,9 @@ class SettingsPreview extends Component {
   }
 
   render() {
-    let consolePath = 'http://' + this.state.ipAddress + '/logs';
+    const { ipAddress } = this.state;
+    const consolePath = "http://" + ipAddress + "/logs";
+    const calibrationPath = "http://" + ipAddress + "/cal";
     return (
       <div className="row no-gutters pt-3 pb-5">
         <div className="col-12 text-center py-3">
@@ -25,9 +27,22 @@ class SettingsPreview extends Component {
           >
             <span className="m-auto p-3" title="settings">
               <i className="fas fa-network-wired fa-2x" />{' '}
-              <span className="h2">{this.state.ipAddress}</span>
+              <span className="h2">{ipAddress}</span>
             </span>
           </Link>
+        </div>
+        <div className="col-12 text-center py-3">
+          <a
+            className="text-decoration-none text-white"
+            href={calibrationPath}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <span className="m-auto p-3" title="Go to calibration">
+              <i className="fas fa-syringe fa-2x" />{' '}
+              <span className="h2">Calibration</span>
+            </span>
+          </a>
         </div>
         <div className="col-12 text-center py-3">
           <a
