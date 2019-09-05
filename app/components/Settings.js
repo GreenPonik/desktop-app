@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import routes from '../constants/routes';
-import styles from './Home.css';
 
 class Settings extends Component {
   constructor(props) {
@@ -27,7 +24,7 @@ class Settings extends Component {
     }
     if (localStorage.getItem('setupName')) {
       this.setState({
-        setupName: JSON.parse(localStorage.getItem('setupName')),
+        setupName: localStorage.getItem('setupName'),
       });
     }
   }
@@ -46,8 +43,7 @@ class Settings extends Component {
     e.preventDefault();
     localStorage.setItem('setupName', this.state.setupName);
     localStorage.setItem('ipAddress', this.state.ipAddress);
-    //window.location.href = '/';
-    //todo make automatic return to home page
+    window.location.href = '/';
   }
 
   render() {
@@ -59,13 +55,14 @@ class Settings extends Component {
           <div className="input-group mb-2">
             <input
               className="form-control"
-              id="_ip"
+              id="_setupName"
               type="text"
               placeholder="put here setup name you want"
               value={setupName == null ? '' : setupName}
               onChange={event => this.handleSetupNameChange(event)}
               required
             />
+            <label htmlFor="_setupName">put the name you want</label>
           </div>
           <div className="form-label-group input-group">
             <input
@@ -77,6 +74,7 @@ class Settings extends Component {
               onChange={event => this.handleIpAddressChange(event)}
               required
             />
+            <label htmlFor="_ip">put here hub ip address</label>
             <div className="input-group-append">
               <div className="input-group-text bg-info">
                 <button
@@ -88,7 +86,7 @@ class Settings extends Component {
                 </button>
               </div>
             </div>
-            <label htmlFor="_ip">put here hub ip address</label>
+            
           </div>
         </form>
       </div>
