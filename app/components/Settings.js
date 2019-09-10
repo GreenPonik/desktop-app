@@ -43,7 +43,7 @@ class Settings extends Component {
     e.preventDefault();
     localStorage.setItem('setupName', this.state.setupName);
     localStorage.setItem('ipAddress', this.state.ipAddress);
-    window.location.href = '/';
+    // window.location.href = '/';
   }
 
   render() {
