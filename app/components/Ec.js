@@ -17,7 +17,7 @@ class Ec extends Component {
     }
   }
 
-  componentDidMount(){
+  componentDidMount() {
     if (localStorage.getItem('ipAddress')) {
       this.setState({
         ipAddress: localStorage.getItem('ipAddress')
@@ -109,12 +109,14 @@ class Ec extends Component {
     ec.set_point = this.state.ec.set_point;
     ec.max_pumps_durations = this.state.ec.max_pumps_durations;
     this.setState({ ec });
-    console.log('data will send : ' + JSON.stringify({ water_sensor }));
+    console.log(
+      'data will send : ' + JSON.stringify({ water_sensor: { ec: ec } })
+    );
     const url = 'http://' + this.state.ipAddress + '/set-water-sensor';
     console.info('info : sending to : ' + url);
     fetch(url, {
       method: 'POST',
-      body: JSON.stringify({ water_sensor })
+      body: JSON.stringify({ water_sensor: { ec: ec } })
     }).then(response => {
       console.log(response.status);
     });

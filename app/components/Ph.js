@@ -105,12 +105,14 @@ class Ph extends Component {
     ph.set_point = this.state.ph.set_point;
     ph.max_pumps_durations = this.state.ph.max_pumps_durations;
     this.setState({ ph });
-    console.log('data will send : ' + JSON.stringify({ ph }));
+    console.log(
+      'data will send : ' + JSON.stringify({ water_sensor: { ph: ph } })
+    );
     const url = 'http://' + this.state.ipAddress + '/set-water-sensor';
     console.info('info : sending to : ' + url);
     fetch(url, {
       method: 'POST',
-      body: JSON.stringify({ ph })
+      body: JSON.stringify({ water_sensor: { ph: ph } })
     }).then(response => {
       console.log(response.status);
     });

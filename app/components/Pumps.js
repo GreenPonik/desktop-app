@@ -148,6 +148,7 @@ class Pumps extends Component {
                     this.handleClickState(index, event, pump.state)
                   }
                   className={
+                    // eslint-disable-next-line no-nested-ternary
                     pump.state
                       ? 'col-5 align-self-center alert alert-success text-center p-4 mb-0'
                       : 'col-5 align-self-center alert alert-secondary text-center p-4 mb-0'
@@ -155,7 +156,8 @@ class Pumps extends Component {
                 >
                   <button className="btn">
                     <i className="fas fa-power-off" />{' '}
-                    {pump.state ? 'On' : 'Off'}
+                    {// eslint-disable-next-line no-nested-ternary
+                    pump.state ? 'On' : 'Off'}
                   </button>
                 </div>
                 <div className="w-100" />
@@ -178,6 +180,7 @@ class Pumps extends Component {
                        * 2 = 60000ms provided by user through smartapp init @ 5000ms
                        */
                       max={
+                        // eslint-disable-next-line no-nested-ternary
                         pump.type === 1
                           ? ph.max_pumps_durations
                           : pump.type === 2
