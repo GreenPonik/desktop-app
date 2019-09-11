@@ -8,12 +8,6 @@ render() {
     <nav className="nav justify-content-center border-bottom sticky-top bg-light">
       <Link
         className="nav-link text-decoration-none text-dark"
-        to={routes.HOME}
-      >
-        Home
-      </Link>
-      <Link
-        className="nav-link text-decoration-none text-dark"
         to={routes.SETTINGS}
       >
         Settings

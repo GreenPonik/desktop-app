@@ -31,24 +31,44 @@ class Ph extends Component {
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
   handleToggleReg(e) {
     e.preventDefault();
-    let ph = Object.assign({}, this.state.ph);
-    ph.regulation_state = !e.target.value;
-    this.setState({ ph });
-    alert('regulation state will send : ' + JSON.stringify(ph, null, 2));
+    console.debug('dataset value: ', e.target.dataset.value);
+    let toggle = !e.target.dataset.value;
+    console.debug(`regulation ph will be toggled to: ${toggle}`);
+    // eslint-disable-next-line react/destructuring-assignment
+    this.state.ph.regulation_state = toggle;
+    // eslint-disable-next-line react/destructuring-assignment
+    const url = `http://${this.state.ipAddress}/set-water-sensor?toggleRegulation=ph`;
+    console.info(`info : sending to : ${url}`);
+    fetch(url, {
+      method: 'POST'
+    })
+      .then(response => response.json())
+      .then(result => console.debug(result))
+      .catch(error => console.debug(error));
   }
 
-  handleToggleCal(e) {
+  handleLaunchCal(e) {
     e.preventDefault();
-    let ph = Object.assign({}, this.state.ph);
-    console.log('uncomment line above to permit calibration launch');
-    // ph.calib_launch = !e.target.value;
-    this.setState({ ph });
-    alert('calibration state will send : ' + JSON.stringify(ph, null, 2));
+    console.debug('dataset value: ', e.target.dataset.value);
+    let launch = !e.target.value;
+    console.debug(`calibration ph will be launch`);
+    // eslint-disable-next-line react/destructuring-assignment
+    this.state.ph.calib_launch = launch;
+    // eslint-disable-next-line react/destructuring-assignment
+    const url = `http://${this.state.ipAddress}/set-water-sensor?launchCalibration=ph`;
+    console.info(`info : sending to : ${url}`);
+    fetch(url, {
+      method: 'POST'
+    })
+      .then(response => response.json())
+      .then(result => console.debug(result))
+      .catch(error => console.debug(error));
   }
 
-  handleChange(e) {
+  handleChangeSetPoint(e) {
     let sp;
     if (!e) {
       sp = document.getElementById('_setPoint').value;
@@ -105,17 +125,19 @@ class Ph extends Component {
     ph.set_point = this.state.ph.set_point;
     ph.max_pumps_durations = this.state.ph.max_pumps_durations;
     this.setState({ ph });
-    console.log(
-      'data will send : ' + JSON.stringify({ water_sensor: { ph: ph } })
+    // eslint-disable-next-line no-template-curly-in-string
+    console.debug(
+      `data will send : ${JSON.stringify({ water_sensor: { ph } })}`
     );
-    const url = 'http://' + this.state.ipAddress + '/set-water-sensor';
-    console.info('info : sending to : ' + url);
+    // eslint-disable-next-line react/destructuring-assignment
+    const url = `http://${this.state.ipAddress}/set-water-sensor`;
+    console.info(`info : sending to:${url}`);
     fetch(url, {
       method: 'POST',
-      body: JSON.stringify({ water_sensor: { ph: ph } })
-    }).then(response => {
-      console.log(response.status);
-    });
+      body: JSON.stringify({ water_sensor: { ph } })
+    })
+      .then(response => console.debug(response.status))
+      .catch(error => console.debug(error));
   }
 
   render() {
@@ -126,6 +148,7 @@ class Ph extends Component {
           <ul className="list-inline">
             <li
               className={
+                // eslint-disable-next-line no-nested-ternary
                 ph === null
                   ? 'list-inline-item text-secondary'
                   : ph.regulation_state === 1
@@ -134,9 +157,13 @@ class Ph extends Component {
               }
               title="Regulation status"
             >
-              <span className="" onClick={event => this.handleToggleReg(event)}>
-                <i className="fas fa-poll fa-2x" />{' '}
-                {ph === null
+              <span onClick={event => this.handleToggleReg(event)}>
+                <i
+                  className="fas fa-poll fa-2x"
+                  data-value={ph.regulation_state}
+                />{' '}
+                {// eslint-disable-next-line no-nested-ternary
+                ph === null
                   ? 'Error'
                   : ph.regulation_state === 1
                   ? 'Runnig'
@@ -145,6 +172,7 @@ class Ph extends Component {
             </li>
             <li
               className={
+                // eslint-disable-next-line no-nested-ternary
                 ph === null
                   ? 'list-inline-item text-secondary'
                   : ph.calib_launch === 1
@@ -153,9 +181,13 @@ class Ph extends Component {
               }
               title="Calibration status"
             >
-              <span className="" onClick={event => this.handleToggleCal(event)}>
-                <i className="fas fa-syringe fa-2x" />{' '}
-                {ph === null
+              <span onClick={event => this.handleLaunchCal(event)}>
+                <i
+                  className="fas fa-syringe fa-2x"
+                  data-value={ph.calib_launch}
+                />{' '}
+                {// eslint-disable-next-line no-nested-ternary
+                ph === null
                   ? 'Error'
                   : ph.calib_launch === 1
                   ? 'Running'
@@ -190,7 +222,7 @@ class Ph extends Component {
                     name="_setPoint"
                     id="_setPoint"
                     value={ph === null ? 0 : ph.set_point}
-                    onChange={event => this.handleChange(event)}
+                    onChange={event => this.handleChangeSetPoint(event)}
                   />
                   <div className="col-12 text-center">
                     <button
@@ -198,7 +230,7 @@ class Ph extends Component {
                       className="btn btn-info"
                       onClick={() => {
                         document.getElementById('_setPoint').stepDown(1);
-                        this.handleChange();
+                        this.handleChangeSetPoint();
                       }}
                     >
                       <i className="fas fa-minus" />
@@ -208,7 +240,7 @@ class Ph extends Component {
                       className="btn btn-info"
                       onClick={() => {
                         document.getElementById('_setPoint').stepUp(1);
-                        this.handleChange();
+                        this.handleChangeSetPoint();
                       }}
                     >
                       <i className="fas fa-plus" />

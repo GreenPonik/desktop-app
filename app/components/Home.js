@@ -30,8 +30,9 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    const url = 'http://' + this.state.ipAddress + '/get-hub';
-    console.log('info : calling url : ' + url);
+    // eslint-disable-next-line react/destructuring-assignment
+    const url = `http://${this.state.ipAddress}/get-hub`;
+    console.debug(`info : calling url :${ url}`);
     fetch(url)
       .then(response => response.json())
       .then(
@@ -53,6 +54,7 @@ class Home extends Component {
       );
   }
 
+  // eslint-disable-next-line class-methods-use-this
   reload() {
     setInterval(() => {
       window.location.reload();
@@ -60,7 +62,7 @@ class Home extends Component {
   }
 
   render() {
-    // this.reload();
+    this.reload();
     const { ipAddress, setupName, isLoaded, error } = this.state;
     return ipAddress == null ? (
       <Settings />
